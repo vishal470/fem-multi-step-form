@@ -563,6 +563,11 @@ body {
     background: hsl(243, 100%, 67%);
 }
 
+/* Hide buttons in inactive steps - Cypress fix */
+.step-content:not(.active) button {
+    display: none !important;
+}
+
 /* Thank You Page */
 .thank-you-container {
     text-align: center;
