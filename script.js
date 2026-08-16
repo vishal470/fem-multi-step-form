@@ -113,47 +113,21 @@ class StepNavigator {
     }
 
     initializeEventListeners() {
-        // Next button - determines current step from active element
-        const nextButton = document.getElementById('next-button');
-        if (nextButton) {
-            nextButton.addEventListener('click', () => {
-                const currentStep = this.getCurrentStep();
-                this.nextStep(currentStep);
-            });
-        }
+        // Next buttons
+        document.getElementById('next-1').addEventListener('click', () => this.nextStep(1));
+        document.getElementById('next-2').addEventListener('click', () => this.nextStep(2));
+        document.getElementById('next-3').addEventListener('click', () => this.nextStep(3));
 
-        // Back button - determines current step from active element
-        const backButton = document.getElementById('back-button');
-        if (backButton) {
-            backButton.addEventListener('click', () => {
-                const currentStep = this.getCurrentStep();
-                this.goToStep(currentStep - 1);
-            });
-        }
+        // Back buttons
+        document.getElementById('back-2').addEventListener('click', () => this.goToStep(1));
+        document.getElementById('back-3').addEventListener('click', () => this.goToStep(2));
+        document.getElementById('back-4').addEventListener('click', () => this.goToStep(3));
 
         // Confirm button
-        const confirmButton = document.getElementById('confirm-button');
-        if (confirmButton) {
-            confirmButton.addEventListener('click', () => this.showThankYou());
-        }
+        document.getElementById('confirm').addEventListener('click', () => this.showThankYou());
 
         // Change plan button
-        const changePlanButton = document.getElementById('change-plan');
-        if (changePlanButton) {
-            changePlanButton.addEventListener('click', () => this.goToStep(2));
-        }
-    }
-
-    getCurrentStep() {
-        // Determine current step from active step element
-        const activeStep = document.querySelector('.step-content.active');
-        if (activeStep && activeStep.id) {
-            const stepMatch = activeStep.id.match(/step-(\d+)/);
-            if (stepMatch) {
-                return parseInt(stepMatch[1]);
-            }
-        }
-        return this.formState.currentStep;
+        document.getElementById('change-plan').addEventListener('click', () => this.goToStep(2));
     }
 
     nextStep(currentStep) {
