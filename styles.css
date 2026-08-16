@@ -564,7 +564,9 @@ body {
 }
 
 /* Hide buttons in inactive steps - Cypress fix */
-.step-content:not(.active) button {
+.step-content:not(.active) #next-button,
+.step-content:not(.active) #back-button,
+.step-content:not(.active) #confirm-button {
     display: none !important;
 }
 
