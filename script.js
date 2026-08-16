@@ -113,21 +113,54 @@ class StepNavigator {
     }
 
     initializeEventListeners() {
-        // Next buttons
-        document.getElementById('next-1').addEventListener('click', () => this.nextStep(1));
-        document.getElementById('next-2').addEventListener('click', () => this.nextStep(2));
-        document.getElementById('next-3').addEventListener('click', () => this.nextStep(3));
+        // Use event delegation on the form container
+        const formContainer = document.querySelector('.form-container');
+        
+        if (formContainer) {
+            formContainer.addEventListener('click', (e) => {
+                const nextButton = e.target.closest('#next-button');
+                if (nextButton) {
+                    e.preventDefault();
+                    const currentStep = this.getCurrentStep();
+                    this.nextStep(currentStep);
+                    return;
+                }
 
-        // Back buttons
-        document.getElementById('back-2').addEventListener('click', () => this.goToStep(1));
-        document.getElementById('back-3').addEventListener('click', () => this.goToStep(2));
-        document.getElementById('back-4').addEventListener('click', () => this.goToStep(3));
+                const backButton = e.target.closest('#back-button');
+                if (backButton) {
+                    e.preventDefault();
+                    const currentStep = this.getCurrentStep();
+                    this.goToStep(currentStep - 1);
+                    return;
+                }
 
-        // Confirm button
-        document.getElementById('confirm').addEventListener('click', () => this.showThankYou());
+                const confirmButton = e.target.closest('#confirm-button');
+                if (confirmButton) {
+                    e.preventDefault();
+                    this.showThankYou();
+                    return;
+                }
 
-        // Change plan button
-        document.getElementById('change-plan').addEventListener('click', () => this.goToStep(2));
+                const changePlanButton = e.target.closest('#change-plan');
+                if (changePlanButton) {
+                    e.preventDefault();
+                    this.goToStep(2);
+                    return;
+                }
+            });
+        }
+    }
+
+    getCurrentStep() {
+        // Determine current step from active step element
+        const activeStep = document.querySelector('.step-content.active');
+        if (activeStep && activeStep.id) {
+            const stepMatch = activeStep.id.match(/step-(\d+)/);
+            if (stepMatch) {
+                return parseInt(stepMatch[1]);
+            }
+        }
+        return this.formState.currentStep;
     }
 
     nextStep(currentStep) {
